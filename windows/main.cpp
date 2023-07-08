@@ -16,33 +16,33 @@ int main() {
         mouse_y = pointer.y;
     }
 
+    //Run as long as END key is not pressed
     while(!GetAsyncKeyState(VK_END)) {
+        //Check if capslock is pressed, we only want to run mouse movement while capslock is on.
         if((GetKeyState(VK_CAPITAL) & 0x001) != 0) {
-            std::cout << "Caps is pressed!" << std::endl;
-        }
+            if(GetAsyncKeyState(VK_LEFT)) {
+                mouse_x = mouse_x - mouse_speed;
+                SetCursorPos(mouse_x, mouse_y);
+            }
 
-        if(GetAsyncKeyState(VK_LEFT)) {
-            mouse_x = mouse_x - mouse_speed;
-            SetCursorPos(mouse_x, mouse_y);
-        }
+            if(GetAsyncKeyState(VK_RIGHT)) {
+                mouse_x = mouse_x + mouse_speed;
+                SetCursorPos(mouse_x, mouse_y);
+            }
 
-        if(GetAsyncKeyState(VK_RIGHT)) {
-            mouse_x = mouse_x + mouse_speed;
-            SetCursorPos(mouse_x, mouse_y);
-        }
+            if(GetAsyncKeyState(VK_UP)) {
+                mouse_y = mouse_y - mouse_speed;
+                SetCursorPos(mouse_x, mouse_y);
+            }
 
-        if(GetAsyncKeyState(VK_UP)) {
-            mouse_y = mouse_y - mouse_speed;
-            SetCursorPos(mouse_x, mouse_y);
-        }
+            if(GetAsyncKeyState(VK_DOWN)) {
+                mouse_y = mouse_y + mouse_speed;
+                SetCursorPos(mouse_x, mouse_y);
+            }
 
-        if(GetAsyncKeyState(VK_DOWN)) {
-            mouse_y = mouse_y + mouse_speed;
-            SetCursorPos(mouse_x, mouse_y);
-        }
-
-        if(GetAsyncKeyState(VK_SPACE)) {
-            leftClick();
+            if(GetAsyncKeyState(VK_SPACE)) {
+                leftClick();
+            }
         }
     }
 
