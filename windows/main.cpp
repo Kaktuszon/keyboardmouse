@@ -1,7 +1,7 @@
 #include <iostream>
 #include <windows.h>
 
-void leftClick();
+void mouseClick(std::string _button);
 float handleSpeed(float _speed);
 
 int main() {
@@ -20,6 +20,7 @@ int main() {
     //Run as long as END key is not pressed
     while(!GetAsyncKeyState(VK_END)) {
         mouse_speed = handleSpeed(0.005);
+
         //Check if capslock is pressed, we only want to run mouse movement while capslock is on.
         if((GetKeyState(VK_CAPITAL) & 0x001) != 0) {
             if(GetAsyncKeyState(VK_LEFT)) {
@@ -44,7 +45,11 @@ int main() {
 
             //If space is pressed, press left mouse button down and up
             if(GetAsyncKeyState(VK_SPACE)) {
-                leftClick();
+                mouseClick("left");
+            }
+
+            if(GetAsyncKeyState(VK_RCONTROL)) {
+                mouseClick("right");
             }
         } else { //If capslock is off we can get the mouse position for smoother use
             if(GetCursorPos(&pointer)) {
@@ -57,13 +62,18 @@ int main() {
     return 0;
 }
 
-void leftClick() {
+void mouseClick(std::string _button) {
     INPUT input[2] = {};
     input[0].type = INPUT_MOUSE;
-    input[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-
     input[1].type = INPUT_MOUSE;
-    input[1].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+
+    if(_button == "left") {
+        input[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+        input[1].mi.dwFlags = MOUSEEVENTF_LEFTUP;
+    } else if(_button == "right") {
+        input[0].mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
+        input[1].mi.dwFlags = MOUSEEVENTF_RIGHTUP;
+    }
 
     Sleep(100); //So we cannot spam by holding the button
 
