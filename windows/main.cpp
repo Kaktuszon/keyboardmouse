@@ -40,6 +40,7 @@ int main() {
                 SetCursorPos(mouse_x, mouse_y);
             }
 
+            //If space is pressed, press left mouse button down and up
             if(GetAsyncKeyState(VK_SPACE)) {
                 leftClick();
             }
