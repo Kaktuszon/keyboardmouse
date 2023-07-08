@@ -43,6 +43,11 @@ int main() {
             if(GetAsyncKeyState(VK_SPACE)) {
                 leftClick();
             }
+        } else { //If capslock is off we can get the mouse position for smoother use
+            if(GetCursorPos(&pointer)) {
+                mouse_x = pointer.x;
+                mouse_y = pointer.y;
+            }
         }
     }
 
